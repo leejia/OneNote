@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html class="um landscape min-width-240px min-width-320px min-width-480px min-width-768px min-width-1024px">
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" href="css/ui-tab.css">
+        <link rel="stylesheet" href="css/ui-base.css">
+        <link rel="stylesheet" href="css/ui-box.css">
+        <link rel="stylesheet" href="css/ui-color.css">
+        <link rel="stylesheet" href="css/ui-res.css">
+        <link rel="stylesheet" href="css/ui-btn.css">
+        <script src="js/zy_control.js">
+        </script>
+        <script src="js/zy_click.js">
+        </script>
+        <script>
+        </script>
+    </head>
+    <body class="um-vp c-wh">
+        <div id="page_0" class="up ub ub-ver" tabindex="0">
+            <!--header开始-->
+            <div id="header" class="uh c-blu1 c-m2 t-wh ub">
+                <div class="umw4" ontouchstart="zy_touch()" onclick="">
+                    <!--插入按钮控件-->
+                </div>
+                <h1 class="ut ub-f1 ulev0 ut-s tx-c" tabindex="0">OneNote</h1>
+                <div class="umw4" ontouchstart="zy_touch()" onclick="">
+                    <!--按钮开始-->
+                    <div id="newDiv" class="btn btn-r btn-n ub ub-ac">
+                        <div id="newBtn" class="ulim" onclick="newNote()">
+                            新建
+                        </div>
+                    </div>
+                    <!--按钮结束-->
+                </div>
+            </div>
+            <!--header结束-->
+            <!--content开始-->
+            <div id="content" class="ub-f1 tx-l t-bla ub-img6 c-org1">
+            </div>
+            <!--content结束-->
+            <!--footer开始-->
+            <div id="footer" class="uf c-m2 c-bla t-wh">
+                <!--iPhone导航条开始-->
+                <div class="ub c-bla c-m12 tab t-wh">
+                    <input id="textBtn" class="uhide" type="radio" name="tabSwitch">
+                    <div ontouchstart="zy_touch('',zy_for)" onclick="loadtext()" class="ub-f1 ub ub-ver tab-act">
+                        <div class="ub-f1 ub-img5 tp-menu">
+                        </div>
+                        <div class="uinn ulev-2 tx-c">
+                            文本笔记
+                        </div>
+                    </div>
+                    <input id="cameraBtn" class="uhide" type="radio" name="tabSwitch">
+                    <div ontouchstart="zy_touch('',zy_for)" onclick="loadcamera()" class="ub-f1 ub ub-ver tab-act">
+                        <div class="ub-f1 ub-img5 tp-shop">
+                        </div>
+                        <div class="uinn ulev-2 tx-c">
+                            拍照笔记
+                        </div>
+                    </div>
+                    <input id="videoBtn" class="uhide" type="radio" name="tabSwitch">
+                    <div ontouchstart="zy_touch('',zy_for)" onclick="loadvideo()" class="ub-f1 ub ub-ver tab-act">
+                        <div class="ub-f1 ub-img5 tp-talk">
+                        </div>
+                        <div class="uinn ulev-2 tx-c">
+                            录音笔记 
+                        </div>
+                    </div>
+                    <input id="infoBtn" class="uhide" type="radio" name="tabSwitch" checked="true">
+                    <div ontouchstart="zy_touch('',zy_for)" onclick="loadinfo()" class="ub-f1 ub ub-ver tab-act">
+                        <div class="ub-f1 ub-img5 tp-info">
+                        </div>
+                        <div class="uinn ulev-2 tx-c">
+                            我的资料 
+                        </div>
+                    </div>
+                </div>
+                <!--iPhone导航条结束-->
+            </div>
+            <!--footer结束-->
+        </div>
+    </body>
+    <script>
+            	var Flag = 1;
+                zy_init();
+                window.uexOnload = function(type){
+                    if (!type) {
+                        zy_con("content", "index_content.html", 0, $$("header").offsetHeight);
+        				
+                    }
+                    window.onorientationchange = window.onresize = function(){
+                        zy_resize("content", 0, $$("header").offsetHeight);
+                    }
+                }
+        		function loadinfo(){
+        			Flag = 1;
+        			$$("infoBtn").checked=true;
+        			$$("newDiv").style.display = "none";
+        			zy_con("content", "index_content.html", 0, $$("header").offsetHeight);
+        		}
+        		function loadtext(){
+        			Flag = 1;
+        			$$("textBtn").checked=true;
+        			zy_con("content", "text_content.html", 0, $$("header").offsetHeight);
+        		}
+        		 function loadcamera(){
+        		 	Flag = 2;
+        		 	$$("cameraBtn").checked=true;
+                   zy_con("content", "camera_content.html", 0, $$("header").offsetHeight);
+                }
+        		 function loadvideo(){
+        		 	Flag = 3;
+        		 	$$("videoBtn").checked=true;
+                    zy_con("content", "video_content.html", 0, $$("header").offsetHeight);
+                }
+        		function newNote(){
+        			if(Flag == 1){//新建文本笔记
+        				uexWindow.evaluateScript('','',openwin());
+        			}else if(Flag ==2){//新建拍照笔记
+        				uexCamera.open();
+        				alert("camera");
+        			}else if(Flag ==3){//新建录音笔记
+        				alert("video");
+        			}
+        		}
+        		function openwin(){//打开新界面
+        			uexWindow.open("",'0','newnote.html','1','','','0');
+        		}
+        		function openDB(){
+        			uexDataBaseMgr.cbOpenDataBase = function(opId,dataType,data){
+        　　　　　		if(dataType==2){
+        　　　　　　		　 if(data==0)
+        　　　　　　　　　	uexLog.sendLog("打开数据库")
+        　　　　　　　	   else
+        　　　　　　　　　    uexLog.sendLog("打开数据库失败")
+        　　　　　       }
+        　　　      }
+        　　        	uexDataBaseMgr.openDataBase(dbname,"");
+        		}
+    </script>
+</html>
